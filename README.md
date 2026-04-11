@@ -45,22 +45,23 @@ Your task is to create automated tests and a CI pipeline based on the descriptio
 ```
 tests/
   flat/
-    search.spec.ts      ← Part I: flat tests — Search for Books by Keywords
-    cart.spec.ts        ← Part I: flat tests — Add Books to Shopping Cart
-    filters.spec.ts     ← Part I: flat tests — Navigate Products via Filters
+    search.spec.ts      ← Task 1: flat tests — Search for Books by Keywords
+    cart.spec.ts        ← Task 1: flat tests — Add Books to Shopping Cart
+    filters.spec.ts     ← Task 1: flat tests — Navigate Products via Filters
   pom/
-    search.pom.spec.ts  ← Part II: same tests using Page Object Model
-    cart.pom.spec.ts    ← Part II: same tests using Page Object Model
-    filters.pom.spec.ts ← Part II: same tests using Page Object Model
-  fixtures.ts           ← Part II: injects page objects into tests
+    search.pom.spec.ts  ← Task 2: POM tests — Search for Books by Keywords
+    cart.pom.spec.ts    ← Task 2: POM tests — Add Books to Shopping Cart
+    filters.pom.spec.ts ← Task 2: POM tests — Navigate Products via Filters
 
-pages/                  ← Part II: Page Object Model classes
-  HomePage.ts
-  ProductPage.ts
-  CartPage.ts
+pages/                  ← Task 2: Page Object Model classes
+  HomePage.ts           ← home page, search, add to cart
+  CartPage.ts           ← cart quantities, totals, remove items
+  ProductPage.ts        ← product detail page
 
-.github/workflows/      ← Part III: CI pipeline
-  playwright.yml
+.github/workflows/
+  playwright.yml        ← Task 3: CI pipeline (fill in the TODOs)
+
+playwright.config.ts    ← Playwright configuration
 ```
 
 ### Useful commands
@@ -86,19 +87,17 @@ npx playwright show-report
 
 ## Test Cases
 
-### Part I — Flat Tests (`tests/flat/`)
+### Task 1 — Flat Tests (`tests/flat/`)
 
 #### Search for Books by Keywords
 
 | Steps | Expected Result (Assertions) |
 |-------|------------------------------|
 | Open https://www.kriso.ee | Confirm the page has a Kriso title/logo |
-| Search for keyword "harry potter" | Confirm multiple products are shown |
+| Search for keyword "xqzwmfkj" | Confirm no products are shown |
+| Search for keyword "tolkien" | Confirm multiple products are shown |
 | | All listed items contain the searched keyword in their title or description |
-| | Products can be sorted |
-| Sort results by price | Verify products are sorted in the expected order (e.g., low to high or high to low) |
-| Filter by language (e.g., English) | Verify only products in that language appear |
-| Filter by format (e.g., "Kõvakaaneline" / hardback) | Confirm fewer items are listed and all match the selected format |
+| Search for book by ISBN "9780307588371" | Confirm correct book "Gone Girl" is shown |
 
 #### Add Books to Shopping Cart
 
@@ -122,26 +121,26 @@ npx playwright show-report
 |-------|------------------------------|
 | Open https://www.kriso.ee | Confirm the page has a Kriso title/logo |
 | Scroll down to find a section like "Muusikaraamatud ja noodid" | Confirm the section is visible |
-| Click the "Õppematerjalid" category | Verify that there are more than 1 products found |
+| Click the "Kitarr" category | Verify that there are more than 1 products found |
 | | Confirm URL or page title reflects navigation correctly |
-| Click on a category ("Bänd ja ansambel") | Confirm active filters show the selected category |
+| Filter by language (e.g., English) | Confirm filter is applied  |
 | | Verify products list now contains less items |
 | Click on a format category ("CD") | Confirm active filters show the selected category |
 | | Verify products list now contains less items |
+| Remove the active filters | Confirm results item count goes up |
 
 ---
 
-### Part II — Page Object Model (`tests/pom/`)
+### Task 2 — Page Object Model (`tests/pom/`)
 
-Refactor your Part I tests to use the Page Object Model:
+Refactor your Task 1 tests to use the Page Object Model:
 
-- Create page classes in `pages/` (already scaffolded with TODOs)
-- Use `tests/fixtures.ts` to inject page objects automatically
-- No raw selectors in test files — all locators live in page classes
+- All locators and actions live in page classes under `pages/` — no raw selectors in test files
+- All POM test files use `beforeAll` + `test.describe.configure({ mode: 'serial' })`, the same pattern as `cart.pom.spec.ts`
 
 ---
 
-### Part III — CI/CD Pipeline (`.github/workflows/playwright.yml`)
+### Task 3 — CI/CD Pipeline (`.github/workflows/playwright.yml`)
 
 Complete the scaffolded workflow file so your tests run automatically in the cloud on every push and pull request.
 

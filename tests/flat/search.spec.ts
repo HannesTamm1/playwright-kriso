@@ -27,7 +27,9 @@ test.describe('Search for Books by Keywords', () => {
   test('shows no products for an unknown keyword', async ({ page }) => {
     await searchByKeyword(page, 'xqzwmfkj');
 
-    await expect(page.getByText(/Teie poolt sisestatud märksõ/i)).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: /Otsingu tulemus/i })).toBeVisible();
+    await expect(page.getByText(/Samuti võite otsida teises andmebaasis/i)).toBeVisible();
+    expect(await page.getByRole('heading', { level: 3, name: /^\d+\./ }).count()).toBe(0);
   });
 
   test('finds books by keyword and ISBN', async ({ page }) => {
