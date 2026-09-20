@@ -20,13 +20,13 @@ test('Search for Books by Keywords', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Pealkiri, autor, ISBN, märksõ' }).fill('xqzwmfkj');
   await page.getByRole('textbox', { name: 'Pealkiri, autor, ISBN, märksõ' }).press('Enter');
   await expect(page.getByText('Teie poolt sisestatud märksõnale vastavat raamatut ei leitud')).toBeVisible();
-  await expect(page.locator('.product')).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: /^\d+\./ })).toHaveCount(0);
 
   await page.getByRole('textbox', { name: 'Pealkiri, autor, ISBN, märksõ' }).fill('tolkien');
   await page.getByRole('button', { name: 'Search' }).click();
   await expect(page.getByRole('heading', { name: 'Otsingu tulemused' })).toBeVisible();
-  await expect(page.locator('.product').nth(1)).toBeVisible();
-  await expect(page.locator('.product').filter({ hasNotText: /tolkien/i })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: /^\d+\./ }).nth(1)).toBeVisible();
+  await expect(page.getByRole('listitem').filter({ has: page.getByRole('heading', { name: /^\d+\./ }) }).filter({ hasNotText: /tolkien/i })).toHaveCount(0);
 
   await page.getByRole('textbox', { name: 'Pealkiri, autor, ISBN, märksõ' }).fill('9780307588371');
   await page.getByRole('button', { name: 'Search' }).click();

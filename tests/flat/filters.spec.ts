@@ -11,6 +11,30 @@
 import { test, expect } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
-test.describe('', () => {
+test('Navigate Products via Filters', async ({ page }) => {
+  await page.goto('https://www.kriso.ee/');
+  await page.getByRole('button', { name: 'Keeldun' }).click();
+  await expect(page).toHaveTitle(/Kriso/i);
+  await expect(page.getByRole('link', { name: 'K', exact: true })).toBeVisible();
 
-}); 
+  await expect(page.getByRole('link', { name: /Muusikaraamatud ja noodid/ }).first()).toBeVisible();
+  await page.getByRole('link', { name: /Muusikaraamatud ja noodid/ }).first().click();
+
+  await page.getByRole('link', { name: /^Kitarr/ }).click();
+  await expect(page).toHaveURL(/instrument=Guitar/);
+  await expect(page.getByText('Otsingu vasteid leitud: 43176')).toBeVisible();
+
+  await page.getByRole('link', { name: /^Inglise/ }).click();
+  await expect(page.getByText('Keel: Inglise').first()).toBeVisible();
+  await expect(page.getByText('Otsingu vasteid leitud: 8061')).toBeVisible();
+
+  await page.getByRole('link', { name: /^CD/ }).click();
+  await expect(page.getByText('Formaat: CD').first()).toBeVisible();
+  await expect(page.getByText('Otsingu vasteid leitud: 1141')).toBeVisible();
+
+  await page.goBack();
+  await expect(page.getByText('Formaat: CD')).toHaveCount(0);
+  await page.goBack();
+  await expect(page.getByText('Keel: Inglise')).toHaveCount(0);
+  await expect(page.getByText('Otsingu vasteid leitud: 43176')).toBeVisible();
+});
