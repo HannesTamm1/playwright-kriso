@@ -27,5 +27,3 @@ export class BasePage {
     await this.searchButton.click();
   }
 }
-
-// CI/CD
