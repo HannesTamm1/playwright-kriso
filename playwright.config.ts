@@ -13,6 +13,7 @@ export default defineConfig({
     trace: "retain-on-failure",
     locale: "et-EE",
     timezoneId: "Europe/Tallinn",
+    extraHTTPHeaders: { "Accept-Language": "et-EE,et;q=0.9" },
   },
 
   projects: [
