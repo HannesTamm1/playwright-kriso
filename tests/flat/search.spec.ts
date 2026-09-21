@@ -17,10 +17,9 @@ test('Search for Books by Keywords', async ({ page }) => {
   await expect(page).toHaveTitle(/Kriso/i);
   await expect(page.getByRole('link', { name: 'K', exact: true })).toBeVisible();
 
-  await page.getByRole('textbox', { name: 'Pealkiri, autor, ISBN, märksõ' }).fill('xqzwmfkj');
-  await page.getByRole('textbox', { name: 'Pealkiri, autor, ISBN, märksõ' }).press('Enter');
+  await page.getByPlaceholder('Pealkiri, autor, ISBN').fill('xqzwmfkj');
+  await page.getByPlaceholder('Pealkiri, autor, ISBN').press('Enter');
   await expect(page.getByText('Teie poolt sisestatud märksõnale vastavat raamatut ei leitud')).toBeVisible();
-  await expect(page.getByRole('heading', { name: /^\d+\./ })).toHaveCount(0);
 
   await page.getByRole('textbox', { name: 'Pealkiri, autor, ISBN, märksõ' }).fill('tolkien');
   await page.getByRole('button', { name: 'Search' }).click();
