@@ -1,5 +1,5 @@
-import { Page, Locator, expect } from '@playwright/test';
-import { BasePage } from './BasePage';
+import { Page, Locator, expect } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
 export class ProductPage extends BasePage {
   private readonly musicBooksCategory: Locator;
@@ -12,13 +12,21 @@ export class ProductPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    this.musicBooksCategory = this.page.getByRole('link', { name: 'Muusikaraamatud ja noodid' });
-    this.guitarCategory = this.page.getByRole('link', { name: 'Kitarr' });
-    this.englishFilter = this.page.getByText('Inglise', { exact: true });
-    this.cdFilter = this.page.getByText('CD', { exact: true });
-    this.removeEnglishFilterButton = this.page.getByRole('link', { name: /Inglise/ });
-    this.removeCdFilterButton = this.page.getByRole('link', { name: /CD/ });
-    this.resultsTotal = this.page.getByText(/\d+ (toodet|tulemust)/);
+    this.musicBooksCategory = this.page.getByRole("link", {
+      name: "Muusikaraamatud ja noodid",
+    });
+    this.guitarCategory = this.page.getByRole("link", { name: "Kitarr" });
+    this.englishFilter = this.page.getByRole("link", { name: /^Inglise/ });
+    this.cdFilter = this.page.getByRole("link", { name: /^CD \(/ });
+    this.removeEnglishFilterButton = this.page
+      .getByRole("listitem")
+      .filter({ hasText: /^Keel: Inglise/ })
+      .getByRole("link");
+    this.removeCdFilterButton = this.page
+      .getByRole("listitem")
+      .filter({ hasText: /^Formaat: CD/ })
+      .getByRole("link");
+    this.resultsTotal = this.page.locator(".sb-results-total");
   }
 
   async openMusicBooksCategory() {
@@ -38,16 +46,16 @@ export class ProductPage extends BasePage {
   }
 
   async removeEnglishFilter() {
-    await this.removeEnglishFilterButton.first().click();
+    await this.removeEnglishFilterButton.click();
   }
 
   async removeCdFilter() {
-    await this.removeCdFilterButton.first().click();
+    await this.removeCdFilterButton.click();
   }
 
   async getResultsCount() {
     const text = await this.resultsTotal.first().textContent();
-    return Number((text || '').replace(/\D/g, '')) || 0;
+    return Number((text || "").replace(/\D/g, "")) || 0;
   }
 
   async verifyResultsCountLessThan(count: number) {
