@@ -46,5 +46,5 @@ test("Navigate Products via Filters", async ({ page }) => {
   await expect(page.getByText("Formaat: CD")).toHaveCount(0);
   await page.goBack();
   await expect(page.getByText("Keel: Inglise")).toHaveCount(0);
-  await expect(page.getByText(/Otsingu vasteid leitud: \d+/)).toBeVisible();
+  await expect(page.getByText("Otsingu vasteid leitud: 43176")).toBeVisible();
 });
