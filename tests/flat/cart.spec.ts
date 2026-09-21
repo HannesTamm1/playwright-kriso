@@ -40,14 +40,14 @@ test('Add Books to Shopping Cart', async ({ page }) => {
     await expect(page.getByText('Kokku: 455,43 €').first()).toBeVisible();
 
     await expect(page.getByRole('columnheader', { name: 'Eemalda' })).toBeVisible();
-  await expect(page.getByText('Tooteid kokku: 2')).toBeVisible();
-  await expect(page.getByRole('cell', { name: /Harry Potter and the Half-/ })).toBeVisible();
-  await expect(page.getByRole('cell', { name: /Lord of the Rings Little Book/ })).toBeVisible();
-  await expect(page.getByText('Kokku: 455,43 €').first()).toBeVisible();
+    await expect(page.getByText('Tooteid kokku: 2')).toBeVisible();
+    await expect(page.getByRole('cell', { name: /Harry Potter and the Half-/ })).toBeVisible();
+    await expect(page.getByRole('cell', { name: /Lord of the Rings Little Book/ })).toBeVisible();
+    await expect(page.getByText('Kokku: 455,43 €').first()).toBeVisible();
 
-  await page.getByRole('link').filter({ hasText: /^$/ }).nth(4).click();
-  await expect(page.getByText('Tooteid kokku: 1')).toBeVisible();
-  await expect(page.getByRole('cell', { name: /Harry Potter and the Half-/ })).toBeVisible();
-  await expect(page.getByRole('cell', { name: /Lord of the Rings Little Book/ })).toHaveCount(0);
-  await expect(page.getByText('Kokku: 439,00 €').first()).toBeVisible();
+    await page.getByRole('link').filter({ hasText: /^$/ }).nth(4).click();
+    await expect(page.getByText('Tooteid kokku: 1')).toBeVisible();
+    await expect(page.getByRole('cell', { name: /Harry Potter and the Half-/ })).toBeVisible();
+    await expect(page.getByRole('cell', { name: /Lord of the Rings Little Book/ })).toHaveCount(0);
+    await expect(page.getByText('Kokku: 439,00 €').first()).toBeVisible();
 });

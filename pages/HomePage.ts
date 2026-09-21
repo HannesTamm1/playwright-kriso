@@ -57,4 +57,8 @@ export class HomePage extends BasePage {
   async verifyNoProductsFoundMessage() {
     await expect(this.noResultsMessage).toContainText('Teie poolt sisestatud märksõnale vastavat raamatut ei leitud. Palun proovige uuesti!');
   }
+
+  async verifyProductVisible(title: string) {
+    await expect(this.page.getByText(title).first()).toBeVisible();
+  }
 }

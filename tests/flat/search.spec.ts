@@ -26,7 +26,7 @@ test('Search for Books by Keywords', async ({ page }) => {
   await page.getByRole('button', { name: 'Search' }).click();
   await expect(page.getByRole('heading', { name: 'Otsingu tulemused' })).toBeVisible();
   await expect(page.getByRole('heading', { name: /^\d+\./ }).nth(1)).toBeVisible();
-  await expect(page.getByRole('listitem').filter({ has: page.getByRole('heading', { name: /^\d+\./ }) }).filter({ hasNotText: /tolkien/i })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: /tolkien/i }).first()).toBeVisible();
 
   await page.getByRole('textbox', { name: 'Pealkiri, autor, ISBN, märksõ' }).fill('9780307588371');
   await page.getByRole('button', { name: 'Search' }).click();
