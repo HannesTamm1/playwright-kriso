@@ -18,7 +18,7 @@ test('Add Books to Shopping Cart', async ({ page }) => {
 
     await page.getByRole('textbox', { name: 'Pealkiri, autor, ISBN, märksõ' }).fill('lord of the rings');
     await page.getByRole('textbox', { name: 'Pealkiri, autor, ISBN, märksõ' }).press('Enter');
-    await expect(page.getByRole('heading', { name: /^2\./ })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Lisa ostukorvi' }).first()).toBeVisible();
 
     await page.getByRole('link', { name: /^6\. Lord of the Rings Little/ }).click();
     await page.getByRole('link', { name: 'Lisa ostukorvi' }).click();
