@@ -3,7 +3,8 @@ import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: "./tests",
   timeout: 30_000,
-  retries: 1,
+  retries: process.env.CI ? 0 : 1,
+  workers: process.env.CI ? 1 : undefined,
   reporter: "html",
 
   use: {
