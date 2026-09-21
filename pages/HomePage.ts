@@ -3,7 +3,7 @@ import { BasePage } from './BasePage';
 import { CartPage } from './CartPage';
 
 export class HomePage extends BasePage {
-  private readonly url = 'https://www.kriso.ee/';
+  private readonly url = 'https://www.kriso.ee/cgi-bin/shop/locale.html?k=est&v=est';
   private readonly resultsTotal: Locator;
   private readonly addToCartLink: Locator;
   private readonly addToCartMessage: Locator;
