@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator, expect } from "@playwright/test";
 
 export class BasePage {
   protected readonly logo: Locator;
@@ -7,14 +7,14 @@ export class BasePage {
   protected readonly searchButton: Locator;
 
   constructor(protected page: Page) {
-    this.logo = this.page.locator('.logo-icon');
-    this.consentButton = this.page.getByRole('button', { name: 'Keeldun' });
-    this.searchInput = this.page.locator('#top-search-text');
-    this.searchButton = this.page.locator('#top-search-btn-wrap');
+    this.logo = this.page.locator(".logo-icon");
+    this.consentButton = this.page.getByRole("button", { name: "Keeldun" });
+    this.searchInput = this.page.locator("#top-search-text");
+    this.searchButton = this.page.locator("#top-search-btn-wrap");
   }
 
   async acceptCookies() {
-    await this.consentButton.click();
+    await this.consentButton.click({ timeout: 5000 }).catch(() => {});
   }
 
   async verifyLogo() {

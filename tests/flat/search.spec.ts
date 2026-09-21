@@ -13,7 +13,7 @@ import { test, expect } from '@playwright/test';
 test('Search for Books by Keywords', async ({ page }) => {
 
   await page.goto('https://www.kriso.ee/');
-  await page.getByRole('button', { name: 'Keeldun' }).click();
+  await page.getByRole('button', { name: 'Keeldun' }).click({ timeout: 5000 }).catch(() => {});
   await expect(page).toHaveTitle(/Kriso/i);
   await expect(page.getByRole('link', { name: 'K', exact: true })).toBeVisible();
 
